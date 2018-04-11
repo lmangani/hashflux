@@ -1,0 +1,32 @@
+{
+  "name": "hashflux",
+  "version": "1.0.0",
+  "description": "InfluxDB Hash-Ring Proxy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmangani/hashflux.git"
+  },
+  "keywords": [
+    "influxdb",
+    "hashring",
+    "proxy",
+    "sharding",
+    "cluster"
+  ],
+  "author": "Lorenzo Mangani <lorenzo.mangani@gmail.com> (http://qxip.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lmangani/hashflux/issues"
+  },
+  "homepage": "https://github.com/lmangani/hashflux#readme",
+  "dependencies": {
+    "hashring": "^3.2.0",
+    "req-fast": "^0.2.17",
+    "theodore": "^1.2.0",
+    "turbo-http": "^0.3.0"
+  }
+}
