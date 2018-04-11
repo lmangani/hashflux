@@ -1,0 +1,2 @@
+# hashflux
+Hashring InfluxDB Proxy
