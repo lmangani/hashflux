@@ -1,6 +1,6 @@
 {
   "name": "hashflux",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "InfluxDB Hash-Ring Proxy",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
     "hashring": "^3.2.0",
     "req-fast": "^0.2.17",
     "theodore": "^1.2.0",
-    "turbo-http": "^0.3.0"
+    "turbo-http": "^0.3.0",
+    "xtend": "^4.0.1"
   }
 }
