@@ -11,7 +11,7 @@ module.exports = function HashFlux(options) {
   self.app = new Theodore()
 
   self.req = require('req-fast');
-  // API Resolver
+  /* API Resolver */
   var apiCall = function(body,url,server) {
     return new Promise((resolve, reject) => {
       self.req({
@@ -55,22 +55,37 @@ module.exports = function HashFlux(options) {
   /* QUERY Handler */
   self.app.post('/query*', (req, res) => {
     var key = req.body.match(/FROM ([^WHERE|^.]+)/)[0].split('"').join('');
-    var node = self.ring.get(key);
-    console.log('HASHRING', node, key);
-    console.log('RING QUERY',node, req.body)
-    self.req({
-      method: 'POST',
-      url: node + req.url,
-      dataType: 'JSON',
-      data: req.body
-    }, (err, resp) => {
-      if (err) {
-        console.log('[ERROR]', err.message)
-        return res.send(err.message, 404)
-      }
-      console.log(resp)
-      return res.send(resp, 200)
-    })
+    var db = req.body.match(/ database /i);
+    if (key && !db) {
+	/* sharded query */
+	    var node = self.ring.get(key);
+	    console.log('HASHRING', node, key);
+	    console.log('RING QUERY',node, req.body)
+	    self.req({
+	      method: 'POST',
+	      url: node + req.url,
+	      dataType: 'JSON',
+	      data: req.body
+	    }, (err, resp) => {
+	      if (err) {
+	        console.log('[ERROR]', err.message)
+	        return res.send(err.message, 404)
+	      }
+	      console.log(resp)
+	      return res.send(resp, 200)
+	    })
+    } else {
+	/* global query */
+	    Promise.all( servers.map(server => apiCall(req.body,req.url,server) )).then((combo) => {
+	      console.log(combo);
+	      return res.send(combo, 200);
+	    }).catch((error) => {
+	      console.log(error);
+	      return res.send(error,500);
+	    });
+
+
+    }
   })
 
   /* FALLBACK Handler */
@@ -78,9 +93,7 @@ module.exports = function HashFlux(options) {
     // Query All Servers, Aggregate responses
     console.log('CATCHALL', req.url, req.body)
     Promise.all( servers.map(server => apiCall(req.body,req.url,server) )).then((combo) => {
-        // completed array of bodies
         console.log(combo);
-        // foo(combo.length, [...args]);
         return res.send(combo, 200);
       }).catch((error) => {
         console.log(error);
