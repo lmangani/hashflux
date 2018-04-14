@@ -2,6 +2,14 @@
 
 Hashring InfluxDB Proxy based on metrics name
 
+###### WARNING: This project is highly experimental and is not suitable for production (yet)
+
+
+### Usage
+HashFlux acts as a proxy between an InfluxDB client *(ie: Cronograf, Kapacitor)* and multiple InfluxDB server instances, dispatching individual or global queries based on metric consistent matric name hashing. 
+
+#### Configuration
+Hashflux is initialized and configured as follows:
 ```
 const hashFlux = require('hashflux');
 
@@ -11,5 +19,8 @@ var server = new hashFlux(options);
 
 #### Todo
 * [x] Sharded Writes
-* [ ] Sharded Queries
-* [ ] Gloabl Commands
+* [x] Sharded Queries
+* [x] Gloabl Commands
+* [ ] Documentation
+* [ ] Test Coverage
+* [ ] Performance Tests
