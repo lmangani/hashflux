@@ -1,0 +1,31 @@
+version: '2.2'
+services:
+  hashflux:
+    container_name: hashflux
+    image: qxip/hashflux
+    depends_on:
+      - "influxdb1"
+      - "influxdb2"
+    expose:
+      - "8086"
+    ports:
+     - "8086:3000"
+    environment:
+     - SERVERS=http://influxdb2:8086,http://influxdb1:8086
+     - PORT=3000
+
+  # Define an InfluxDB service
+  influxdb1:
+    image: influxdb:latest
+    expose:
+      - "8086"
+#    volumes:
+#      - ./data/influxdb:/var/lib/influxdb
+
+  # Define an InfluxDB service
+  influxdb2:
+    image: influxdb:latest
+    expose:
+      - "8086"
+#    volumes:
+#      - ./data/influxdb:/var/lib/influxdb
