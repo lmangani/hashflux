@@ -2,7 +2,7 @@ version: '2.2'
 services:
   hashflux:
     container_name: hashflux
-    image: qxip/hashflux
+    image: qxip/hashflux:master
     depends_on:
       - "influxdb1"
       - "influxdb2"
