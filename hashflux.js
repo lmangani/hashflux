@@ -6,11 +6,30 @@ module.exports = function HashFlux(options) {
 
   var self = {};
   var clients = {};
-  self.app = new Theodore()
-  self.req = require('req-fast');
   var servers = options.servers;
   self.ring = new HashRing(servers);
+  self.app = new Theodore()
 
+  self.req = require('req-fast');
+  // API Resolver
+  var apiCall = function(body,url,server) {
+    return new Promise((resolve, reject) => {
+      self.req({
+        method: 'POST',
+        url: server + url,
+        dataType: 'JSON',
+        data: body
+      }, (err, resp) => {
+        if (err) {
+          console.log('[ERROR]', err.message)
+       	  reject;
+        }
+        console.log(resp)
+        resolve(resp.body || {} );
+      })
+
+    });
+  };
 
   /* WRITE Handler */
   self.app.post('/write*', (req, res) => {
@@ -74,23 +93,4 @@ module.exports = function HashFlux(options) {
 }
 
 
-// API Resolver
-function apiCall(body,url,server) {
-  return new Promise((resolve, reject) => {
-    self.req({
-      method: 'POST',
-      url: server + url,
-      dataType: 'JSON',
-      data: body
-    }, (err, resp) => {
-      if (err) {
-        console.log('[ERROR]', err.message)
-	reject;
-      }
-      console.log(resp)
-      resolve(resp.body || {} );
-    })
-
-  });
-}
 

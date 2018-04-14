@@ -1,4 +1,7 @@
 const hashFlux = require('./hashflux');
 
-var options = { servers: [ '127.0.0.1:8086' ], port: 3000 };
+var servers = process.env.SERVERS.split(',') || ['http://127.0.0.1:8086'];
+var port = process.env.PORT || 8086;
+
+var options = { servers: servers, port: port };
 var server = new hashFlux(options);
