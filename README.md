@@ -8,6 +8,8 @@ Hashring InfluxDB Proxy based on metrics name
 ### Usage
 HashFlux acts as a proxy between an InfluxDB client *(ie: Cronograf, Kapacitor)* and multiple InfluxDB server instances, dispatching individual or global queries based on metric consistent matric name hashing. 
 
+![hashflux](https://user-images.githubusercontent.com/1423657/38781013-e0550dca-40d6-11e8-953d-83f6a1417c9f.gif)
+
 #### Configuration
 Hashflux is initialized and configured as follows:
 ```
