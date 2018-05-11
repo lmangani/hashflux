@@ -1,6 +1,6 @@
 # hashflux <img src="https://user-images.githubusercontent.com/1423657/38137158-590eefbc-3423-11e8-96dd-487022b5618c.gif" width=100 /><img src="https://g.codefresh.io/api/badges/build?repoOwner=lmangani&repoName=hashflux&branch=master&pipelineName=hashflux&accountName=lmangani&type=cf-1"/>
 
-Hashring InfluxDB Proxy based on metrics name
+Hashring InfluxDB Proxy based on metrics name useful to achieve 1.21 GigaWatts of power
 
 ###### WARNING: This project is highly experimental and is not suitable for production (yet)
 
