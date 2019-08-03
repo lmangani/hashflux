@@ -108,6 +108,21 @@ module.exports = function HashFlux(options) {
       });
   })
 
+  /* FALLBACK Handler */
+  self.app.get('/*', (req, res) => {
+    // Query All Servers, Aggregate responses
+    Promise.all( servers.map(server => apiCall(req.body,req.url,server) )).then((combo) => {
+        if (options.debug) console.log('COMBO fallback',JSON.stringify(combo));
+	var output = {};
+        combo.forEach(function(item){ output = extend(item.results[0], output); });
+        if (options.debug) console.log('MERGE RESPONSE',output);
+        return res.json({ results: [output]}, 200);
+      }).catch((error) => {
+        if (options.debug) console.log(error);
+	return res.json(error,500);
+      });
+  })
+
   /* PING Handler */
   self.app.get('/ping', (req, res) => {
 	if (options.debug) console.log('PING req', req);
