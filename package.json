@@ -1,6 +1,6 @@
 {
   "name": "hashflux",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "InfluxDB Hash-Ring Proxy",
   "main": "index.js",
   "scripts": {

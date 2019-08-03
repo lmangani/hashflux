@@ -81,7 +81,9 @@ module.exports = function HashFlux(options) {
 	    Promise.all( servers.map(server => apiCall(req.body,req.url,server) )).then((combo) => {
 	      if (options.debug) console.log('COMBO response',combo);
 	      var output = {};
-	      combo.forEach(function(item){ output = extend(item.results[0], output); });
+	      combo.forEach(function(item){ 
+		if (item && item.results) { output = extend(item.results[0], output); }
+	      });
 	      if (options.debug) console.log('MERGE RESPONSE',output);
 	      return res.json({ results: [output] }, 200);
 	    }).catch((error) => {
@@ -99,7 +101,7 @@ module.exports = function HashFlux(options) {
     Promise.all( servers.map(server => apiCall(req.body,req.url,server) )).then((combo) => {
         if (options.debug) console.log('COMBO fallback',JSON.stringify(combo));
 	var output = {};
-        combo.forEach(function(item){ output = extend(item.results[0], output); });
+        combo.forEach(function(item){ if (items && items.results) output = extend(item.results[0], output); });
         if (options.debug) console.log('MERGE RESPONSE',output);
         return res.json({ results: [output]}, 200);
       }).catch((error) => {
@@ -114,7 +116,7 @@ module.exports = function HashFlux(options) {
     Promise.all( servers.map(server => apiCall(req.body,req.url,server) )).then((combo) => {
         if (options.debug) console.log('COMBO fallback',JSON.stringify(combo));
 	var output = {};
-        combo.forEach(function(item){ output = extend(item.results[0], output); });
+        combo.forEach(function(item){ if (item && item.results) output = extend(item.results[0], output); });
         if (options.debug) console.log('MERGE RESPONSE',output);
         return res.json({ results: [output]}, 200);
       }).catch((error) => {
